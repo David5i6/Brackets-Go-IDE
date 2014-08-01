@@ -25,11 +25,8 @@ define(function (require, exports, module) {
     var GoHintProvider = require('GoHintProvider'); // load goHintProvider.
     var GoHintFormatter = require('GoHintFormatter'); // load goHintProvider.
 
-
-
     // Load CSS
     ExtensionUtils.loadStyleSheet(module, "style/main.css");
-
 
     // Mime
     Editor.defineMIME("text/x-go", "go");
@@ -45,11 +42,9 @@ define(function (require, exports, module) {
 
     // Where the app starts
     AppInit.appReady(function () {
-
-        var goHintProvider = new GoHintProvider($,new GoHintFormatter());
+        var goHintProvider = new GoHintProvider(new GoHintFormatter());
         // Set the hint provider for Go language.
         CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
-
     });
 
 

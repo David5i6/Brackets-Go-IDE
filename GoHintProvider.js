@@ -15,7 +15,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    
+
 
 
     // Para poder lanzar comandos externos.
@@ -32,15 +32,19 @@ define(function (require, exports, module) {
 
     // $ is jquery (loaded in the main.js and passed via param)
     // $deferred is a global holder for deferred messages.
-    var $, $deferred, cm,vpet=0;
+    var $deferred, cm, vpet = 0;
+
+    // Cursors
+    var lcursor, bcursor;
 
 
 
     function getHintsD(implicitChar, text, cursor) {
+
         // A new promise
         $deferred = new $.Deferred();
         // Call getHint on a Domain and increment the version of petition.
-        GoHinterDomain.exec("getHint", implicitChar, text, cursor,++vpet)
+        GoHinterDomain.exec("getHint", implicitChar, text, cursor, ++vpet)
             .fail(function (err) {
                 console.error("[GoHintDomain] failed to get hints: ", err);
             });
@@ -52,23 +56,21 @@ define(function (require, exports, module) {
         return implicitChar !== ' ' && implicitChar !== '\n' && implicitChar !== '\t';
     }
 
-    function GoHintProvider(jquery,formatter) {
+    function GoHintProvider(formatter) {
 
 
-        $ = jquery;
+        //$ = jquery;
 
         this.hasHints = function (editor, implicitChar) {
-            // Set CodeMirror editor.
             cm = editor._codeMirror;
-            
+
             return validToken(implicitChar);
         };
 
         this.getHints = function (implicitChar) {
             // If is a valid token for a hint ...
-            if (validToken(implicitChar)) {            
+            if (validToken(implicitChar)) {
                 var cursor = cm.getCursor();
-            
                 var txt = cm.getRange({
                     line: 0,
                     ch: 0
@@ -83,9 +85,30 @@ define(function (require, exports, module) {
 
         };
 
-        this.insertHint = function (hint) {
-            //TODO: insert current hint
-            return false;
+        this.endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.'];
+
+        this.insertHint = function ($hint) {
+            if (!$hint) {
+                console.log('hint:', $hint);
+                throw new TypeError("Must provide valid hint and hints object as they are returned by calling getHints");
+            } else {
+
+
+                var cursor = cm.getCursor();
+                var txt = cm.getRange({
+                    line: 0,
+                    ch: 0
+                }, cursor);
+
+                var tl = txt.length - 1;
+                var ti = tl;
+
+                while ((ti > 0) && (this.endtokens.indexOf(txt.charAt(ti)) === -1)) {
+                    --ti;
+                }
+
+                cm.replaceSelection($hint.data('token').substring(tl - ti));
+            }
         };
 
 
@@ -99,8 +122,8 @@ define(function (require, exports, module) {
                 $deferred.resolve({
                     hints: formatter.format(data),
                     match: "",
-                    selectInitial: false,
-                    handleWideResults: true
+                    selectInitial: true,
+                    handleWideResults: false
                 });
             }
         });

@@ -1,23 +1,32 @@
 .goHint_package{
-    box-shadow: inset 0 0 .25em #ffba00;
+    box-shadow: inset 3pt 0 3pt 1pt #ffba00;
     border-left:1pt solid #cb9700;
     border-radius: 0.5em;
-    padding-left:2pt;
+    padding-left:8pt;
     padding-right:2pt;
     margin:2pt;
     text-shadow: 0 0 2pt #EAEACA;
 }
 
 .goHint_func{
-    box-shadow: inset 0 0 .25em #7db9ff;
-    border-left: 1pt solid #005dd4;
+    box-shadow: inset 3pt 0 3pt 1pt #7db9ff;
+    border-left: 1pt solid #0560f2;
     border-radius: 0.5em;
-    padding-left:2pt;
+    padding-left:8pt;
     padding-right:2pt;
     margin:2pt;
     text-shadow: 0 0 2pt #CACAFF;
 }
 
+.goHint_var{
+    box-shadow: inset 3pt 0 3pt 1pt #ff7de6;
+    border-left: 1pt solid #f205e0;
+    border-radius: 0.5em;
+    padding-left:8pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #ffcaff;
+}
 
 .goHint_fp{
     color:#1b3a9b;

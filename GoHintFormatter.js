@@ -14,7 +14,7 @@ define(function (require, exports, module) {
 
             var t = linea.indexOf(' ');
             var lin = '';
-            var t2, l2, t3, l3;
+            var t2, l2, t3, l3, l4,lv;
 
             var tipo = linea.substring(0, t);
 
@@ -22,29 +22,41 @@ define(function (require, exports, module) {
 
             l2 = linea.substring(t + 1);
             t2 = l2.indexOf('(');
+            
+            if (t2 === -1) {
+                t2 = l2.indexOf(' ', 1);
+            }
 
             // Is a procedure ?
             if (t2 !== -1) {
-                
-                lin += l2.substring(0, t2)+ ' ';
+                lv = l2.substring(0, t2);
+                lin += lv + ' ';
                 /*
                 lin += l2.substring(t2);
                 */
                 // Has return values ?
-                l3 = l2.substring(t2 );
-                t3 = l3.indexOf('(',1);
+                l3 = l2.substring(t2);
+                t3 = l3.indexOf('(', 1);
+                if (t3 === -1) {
+                    t3 = l3.lastIndexOf(')');
+                }
 
                 if (t3 !== -1) {
-                    lin += '<span class="goHint_fp">'+l3.substring(0, t3)+'</span>';
-                    lin += ' <span class="goHint_fr">(';
+                    l4 = l3.substring(0, t3);
+                    lin += '<span class="goHint_fp">' + l4 + '</span>';
+                    lin += ' <span class="goHint_fr">';
                     lin += l3.substring(t3);
                     lin += '</span>';
+                    lin = $(lin).data("token",lv);
                 } else {
-                    lin += '<span class="goHint_fp">'+l3+'</span>';
+                    lin += '<span class="goHint_fp">' + l3 + '</span>';
+                    lin = $(lin).data("token",lv);
                 }
 
             } else {
-                lin += l2;
+                lin += l2+'<i></i>';
+                console.log(lin);
+                lin = $(lin).data("token",l2);
             }
 
             return lin;
@@ -74,45 +86,21 @@ define(function (require, exports, module) {
          */
         this.parseAll = function (data) {
             var arr = [];
-
-            console.log(data);
-
             var bp = data.indexOf('\n');
 
             while ((bp = this.parseLine(arr, data, bp)) !== -1);
 
-            /*
-            bp=this.parseLine(arr,data,bp);
-            console.log("### PARSELINE : ",bp);
-            
-            bp=this.parseLine(arr,data,bp);
-            console.log("### PARSELINE : ",bp);
-            */
-
-
             return arr;
-
         }
 
         /**
          * Receives raw data, and returns a formatted list of hints.
          */
         this.format = function (data) {
-            /*
-            var hints = data.substring(
-                data.indexOf('\n') + 1, data.lastIndexOf('\n')
-            ).split('\n');
-            */
-
-            var hints = this.parseAll(data);
-
-            return hints;
-
+            return this.parseAll(data);
         }
 
-
     }
-
 
     return GoHintFormatter;
 });
