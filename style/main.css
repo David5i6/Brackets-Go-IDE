@@ -1,0 +1,30 @@
+.goHint_package{
+    box-shadow: inset 0 0 .25em #ffba00;
+    border-left:1pt solid #cb9700;
+    border-radius: 0.5em;
+    padding-left:2pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #EAEACA;
+}
+
+.goHint_func{
+    box-shadow: inset 0 0 .25em #7db9ff;
+    border-left: 1pt solid #005dd4;
+    border-radius: 0.5em;
+    padding-left:2pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #CACAFF;
+}
+
+
+.goHint_fp{
+    color:#1b3a9b;
+    text-shadow: 0 0 2pt #CADAEA;
+}
+
+.goHint_fr{
+    color:#327232;
+    text-shadow: 0 0 2pt #CAEACA;
+}

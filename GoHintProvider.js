@@ -15,7 +15,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    console.log("Activando GoHintProvider");
+    
 
 
     // Para poder lanzar comandos externos.
@@ -37,13 +37,11 @@ define(function (require, exports, module) {
 
 
     function getHintsD(implicitChar, text, cursor) {
+        // A new promise
         $deferred = new $.Deferred();
+        // Call getHint on a Domain and increment the version of petition.
         GoHinterDomain.exec("getHint", implicitChar, text, cursor,++vpet)
-            .done(function (value) {
-                console.log(
-                    "[GoHintDomain] Hints passsed"
-                );
-            }).fail(function (err) {
+            .fail(function (err) {
                 console.error("[GoHintDomain] failed to get hints: ", err);
             });
         return $deferred;
@@ -54,59 +52,31 @@ define(function (require, exports, module) {
         return implicitChar !== ' ' && implicitChar !== '\n' && implicitChar !== '\t';
     }
 
-    function GoHintProvider(jquery) {
+    function GoHintProvider(jquery,formatter) {
 
 
         $ = jquery;
 
         this.hasHints = function (editor, implicitChar) {
-            console.log("HasHints [" + implicitChar + "]");
-
-            console.log("CodeMirror: ", editor)
-            console.log("CodeMirrorCP: ", editor.getCursorPos())
             // Set CodeMirror editor.
             cm = editor._codeMirror;
-            //var cursor = cm.getCursor();
-            //var token = editor.getTokenAt(cursor);
-            //var txt = cm.getRange({line:0,ch:0},cursor);
-
-            //var txt2=cm.getValue();
-            //console.log(txt,txt.length,txt2.substring(txt.length));
-
-            // console.log("Token: ",token);
-
+            
             return validToken(implicitChar);
         };
 
         this.getHints = function (implicitChar) {
-            console.log("Go getHints [" + implicitChar + "]");
-
-            console.log(implicitChar);
-
-            if (validToken(implicitChar)) {
-
-                console.log(new $.Deferred());
-
-
+            // If is a valid token for a hint ...
+            if (validToken(implicitChar)) {            
                 var cursor = cm.getCursor();
-                //var token = editor.getTokenAt(cursor);
+            
                 var txt = cm.getRange({
                     line: 0,
                     ch: 0
                 }, cursor);
                 var txt2 = cm.getValue();
 
-
+                // a Promise of a hint via Domain ...
                 return getHintsD(implicitChar, txt2, txt.length);
-                /*
-            return {
-
-                hints: ["1", "2"],
-                match: "",
-                selectInitial: true,
-                handleWideResults: true
-
-            };*/
             } else {
                 return false;
             }
@@ -114,33 +84,29 @@ define(function (require, exports, module) {
         };
 
         this.insertHint = function (hint) {
-            console.log("insertHint");
+            //TODO: insert current hint
             return false;
         };
 
 
 
-        //console.log("###############################");
-        console.log("nodeConection", nodeConnection);
-        //console.log("$nodeConection", $(nodeConnection));
-
+        /**
+         * When domain send the update event (and only if there're no multiple version events...
+         * Format the response and resolve the promise.
+         */
         $(nodeConnection).on("GoHinter.update", function (evt, data, petition) {
-            //console.log("GO Evento >> ", data,petition, vpet);
             if (petition === vpet) {
                 $deferred.resolve({
-                    hints: data.split("\n"),
+                    hints: formatter.format(data),
                     match: "",
                     selectInitial: false,
                     handleWideResults: true
                 });
             }
         });
-
     }
 
 
-
-    console.log("...");
     return GoHintProvider;
 
 });

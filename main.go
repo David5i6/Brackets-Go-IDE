@@ -10,4 +10,6 @@ func main() {
     fmt.Println("")
     fmt.Println
 	fmt.Println("Hello, 世界")
+    fmt.Println("ddd")
+    fmt.Pri
 }

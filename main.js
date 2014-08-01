@@ -19,18 +19,22 @@ define(function (require, exports, module) {
     var AppInit = brackets.getModule("utils/AppInit"), // Brackets init
         CodeHintManager = brackets.getModule("editor/CodeHintManager"), // CodeMirror Hints
         LanguageManager = brackets.getModule("language/LanguageManager"), // Language
-        Editor = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"); // CodeMirror
+        Editor = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"),// CodeMirror
+        ExtensionUtils  = brackets.getModule("utils/ExtensionUtils"); // ExtensionUtils (to load css)
 
     var GoHintProvider = require('GoHintProvider'); // load goHintProvider.
+    var GoHintFormatter = require('GoHintFormatter'); // load goHintProvider.
 
 
 
+    // Load CSS
+    ExtensionUtils.loadStyleSheet(module, "style/main.css");
 
 
     // Mime
     Editor.defineMIME("text/x-go", "go");
 
-    // Definimos el idioma para go.
+    // Define go language
     LanguageManager.defineLanguage("go", {
         name: "go-lang",
         mode: "go",
@@ -42,7 +46,7 @@ define(function (require, exports, module) {
     // Where the app starts
     AppInit.appReady(function () {
 
-        var goHintProvider = new GoHintProvider($);
+        var goHintProvider = new GoHintProvider($,new GoHintFormatter());
         // Set the hint provider for Go language.
         CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
 

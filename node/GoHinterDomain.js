@@ -52,21 +52,22 @@ maxerr: 50, node: true */
      * @return {number} The amount of memory.
      */
     function cmdGetHint(implicitChar, text, cursor, petition) {
-        console.log("#### >>> Go Hinter Domain :-) ", implicitChar);
+    
 
         try {
             var gocode = spawn('/Users/david/go/bin/gocode', ['autocomplete', 'c' + cursor]);
 
+            // Send current buffer file to stdin and close stdin.
             gocode.stdin.write(text);
             gocode.stdin.end();
 
-            console.log("@@@@@@@@@@", text, cursor);
+            
+            // Temp data
             var temp = "";
-            //var gocode = spawn("ls",['-lh', '/']);
+            
+            // Capture output and concatenate to temp.
             gocode.stdout.on('data', function (data) {
                 temp += data.toString();
-
-                console.log("event GoHinter.update emmited !");
             });
 
             gocode.stderr.on('data', function (data) {
@@ -74,7 +75,7 @@ maxerr: 50, node: true */
             });
 
             gocode.on('close', function (code) {
-                console.log('child process exited with code ' + code,petition);
+                // emit the result.
                 _domainManager.emitEvent("GoHinter", "update", [temp, petition]);
             });
 
@@ -82,11 +83,11 @@ maxerr: 50, node: true */
         } catch (e) {
             console.log(e);
         }
-        console.log("El return no se hace, el deferred hara su parte ...");
+
     }
 
     /**
-     * Initializes the test domain with several test commands.
+     * Initializes the domain.
      * @param {DomainManager} domainManager The DomainManager for the server
      */
     function init(domainManager) {
@@ -140,6 +141,7 @@ maxerr: 50, node: true */
         _domainManager = domainManager;
     }
 
+    // In domains export the initialization function.
     exports.init = init;
 
 }());
