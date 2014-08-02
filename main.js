@@ -46,6 +46,5 @@ define(function (require, exports, module) {
         // Set the hint provider for Go language.
         CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
     });
-
-
+    
 });

@@ -52,8 +52,35 @@ define(function (require, exports, module) {
     }
 
 
+    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.', '\n', '\t'];
+
     function validToken(implicitChar) {
-        return implicitChar !== ' ' && implicitChar !== '\n' && implicitChar !== '\t';
+        //return endtokens.indexOf(implicitChar)===-1;
+        return true;
+    }
+
+
+
+    function getLastToken() {
+
+        var cursor = cm.getCursor();
+        var txt = cm.getRange({
+            line: 0,
+            ch: 0
+        }, cursor);
+
+        var tl = txt.length - 1;
+        var ti = tl;
+        var ltoken;
+
+        while ((ti > 0) && (endtokens.indexOf(txt.charAt(ti)) === -1)) {
+            --ti;
+        }
+
+        ltoken=txt.substring(ti);
+        console.log(ltoken);
+        
+        return ltoken;
     }
 
     function GoHintProvider(formatter) {
@@ -85,15 +112,14 @@ define(function (require, exports, module) {
 
         };
 
-        this.endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.'];
+
 
         this.insertHint = function ($hint) {
             if (!$hint) {
                 console.log('hint:', $hint);
                 throw new TypeError("Must provide valid hint and hints object as they are returned by calling getHints");
             } else {
-
-
+                /*
                 var cursor = cm.getCursor();
                 var txt = cm.getRange({
                     line: 0,
@@ -103,11 +129,13 @@ define(function (require, exports, module) {
                 var tl = txt.length - 1;
                 var ti = tl;
 
-                while ((ti > 0) && (this.endtokens.indexOf(txt.charAt(ti)) === -1)) {
+                while ((ti > 0) && (endtokens.indexOf(txt.charAt(ti)) === -1)) {
                     --ti;
                 }
+                */
 
-                cm.replaceSelection($hint.data('token').substring(tl - ti));
+                var lasttoken = getLastToken();
+                cm.replaceSelection($hint.data('token').substring(lasttoken.length-1));
             }
         };
 

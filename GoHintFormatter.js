@@ -6,8 +6,6 @@ define(function (require, exports, module) {
      */
     function GoHintFormatter() {
 
-
-
         this.formatLine = function (linea) {
             linea = linea || '';
 
