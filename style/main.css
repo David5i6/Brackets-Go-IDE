@@ -28,6 +28,17 @@
     text-shadow: 0 0 2pt #ffcaff;
 }
 
+
+.goHint_type{
+    box-shadow: inset 3pt 0 3pt 1pt #ff7171;
+    border-left: 1pt solid #fa0c0c;
+    border-radius: 0.5em;
+    padding-left:8pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #ffcaff;
+}
+
 .goHint_fp{
     color:#1b3a9b;
     text-shadow: 0 0 2pt #CADAEA;
