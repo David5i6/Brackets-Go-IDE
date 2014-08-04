@@ -4,10 +4,10 @@
     "description": "Go language IDE transformation for brackets (needs gocode)",
     "version": "0.0.4",
     "author": "David Sánchez i Gregori",
-    "homepage": "https://github.com/David5i6/Brackets-Ternific",
+    "homepage": "https://github.com/David5i6/",
     "repository": {
         "type": "git",
-        "url": "git://github.com/David5i6/Brackets-Ternific.git"
+        "url": "git://github.com/David5i6/"
     },
     "engines": {
         "brackets": ">=0.40.0"
