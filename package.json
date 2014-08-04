@@ -4,10 +4,10 @@
     "description": "Go language IDE transformation for brackets (needs gocode)",
     "version": "0.0.4",
     "author": "David Sánchez i Gregori",
-    "homepage": "https://github.com/David5i6/",
+    "homepage": "https://github.com/David5i6/Brackets-Go-IDE.git",
     "repository": {
         "type": "git",
-        "url": "git://github.com/David5i6/"
+        "url": "git://github.com/David5i6/Brackets-Go-IDE.git"
     },
     "engines": {
         "brackets": ">=0.40.0"
