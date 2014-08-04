@@ -1,7 +1,7 @@
 {
     "title": "Go-IDE",
     "name": "go-ide",
-    "description": "Go language IDE transformation for brackets.",
+    "description": "Go language IDE transformation for brackets (needs gocode)",
     "version": "0.0.4",
     "author": "David Sánchez i Gregori",
     "homepage": "https://github.com/David5i6/Brackets-Ternific",

@@ -53,7 +53,6 @@ define(function (require, exports, module) {
 
             } else {
                 lin += l2+'<i></i>';
-                console.log(lin);
                 lin = $(lin).data("token",l2);
             }
 

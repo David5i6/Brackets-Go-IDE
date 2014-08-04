@@ -18,6 +18,16 @@
     text-shadow: 0 0 2pt #CACAFF;
 }
 
+.goHint_langfunc{
+    box-shadow: inset 3pt 0 3pt 1pt #917dff;
+    border-left: 1pt solid #3305f2;
+    border-radius: 0.5em;
+    padding-left:8pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #d8caff;
+}
+
 .goHint_var{
     box-shadow: inset 3pt 0 3pt 1pt #ff7de6;
     border-left: 1pt solid #f205e0;
@@ -26,6 +36,16 @@
     padding-right:2pt;
     margin:2pt;
     text-shadow: 0 0 2pt #ffcaff;
+}
+
+.goHint_lang{
+    box-shadow: inset 3pt 0 3pt 1pt #87ff7d;
+    border-left: 1pt solid #20f205;
+    border-radius: 0.5em;
+    padding-left:8pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #ccffca;
 }
 
 

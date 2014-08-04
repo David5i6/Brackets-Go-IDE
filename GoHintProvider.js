@@ -55,8 +55,7 @@ define(function (require, exports, module) {
     var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.', '\n', '\t'];
 
     function validToken(implicitChar) {
-        //return endtokens.indexOf(implicitChar)===-1;
-        return true;
+        return (implicitChar!=='')&&(endtokens.indexOf(implicitChar)===-1);
     }
 
 
@@ -77,11 +76,44 @@ define(function (require, exports, module) {
             --ti;
         }
 
-        ltoken=txt.substring(ti);
+        ltoken = txt.substring(ti + 1);
         console.log(ltoken);
-        
+
         return ltoken;
     }
+
+
+    var langtokens = ['bool', 'byte', 'const', 'complex128', 'complex64', 'error', 'flot32', 'float64',
+                      'for', 'func', 'go', 'if', 'int', 'int16', 'int32', 'int64', 'int8', 'interface', 'import',
+                      'il', 'package', 'return', 'rune', 'string', 'struct', 'type',
+                      'uint', 'uint16', 'uint32', 'uint64', 'uint8', 'uintptr', 'var'];
+    var langtokensL = langtokens.length;
+
+
+    var langftokens = ['append', 'cap', 'close', 'complex', 'copy', 'delete', 'imag', 'len', 'make', 'new',
+                       'panic', 'print', 'prntln', 'real', 'recover'];
+    var langftokens2 = [
+        '(slice []Type, elems ...Type) []Type',
+        '(v Type) int',
+        '(c chan<- Type)',
+        '(r, i FloatType) ComplexType',
+        '(dst, src []Type) int',
+        '(m map[Type]Type1, key Type)',
+        '(c ComplexType) FloatType',
+        '(v Type) int',
+        '(Type, size IntegerType) Type',
+        '(Type) *Type',
+        '(v interface{})',
+        '(args ...Type)',
+        '(args ...Type)',
+        '(c ComplexType) FloatType',
+        '() interface{}'
+    ]
+    var langftokensL = langftokens.length;
+
+
+
+
 
     function GoHintProvider(formatter) {
 
@@ -90,7 +122,6 @@ define(function (require, exports, module) {
 
         this.hasHints = function (editor, implicitChar) {
             cm = editor._codeMirror;
-
             return validToken(implicitChar);
         };
 
@@ -109,33 +140,62 @@ define(function (require, exports, module) {
             } else {
                 return false;
             }
-
         };
 
+        function resolveHint(data, petition) {
+            if (petition === vpet) {
+                $deferred.resolve({
+                    hints: formatter.format(data),
+                    match: "",
+                    selectInitial: true,
+                    handleWideResults: false
+                });
+            }
+        }
 
+        function addLanguageHints(data, petition) {
+            if (petition === vpet) {
+                var lasttoken = getLastToken(),
+                    i, tok;
+
+                for (i = 0; i < langtokensL; ++i) {
+                    tok = langtokens[i];
+                    if (tok.indexOf(lasttoken) === 0) {
+                        data += 'lang ' + tok + '\n';
+                    }
+                }
+
+                window.setTimeout(function () {
+                    addLanguageFunctionHints(data, petition);
+                }, 0);
+            }
+        }
+
+        function addLanguageFunctionHints(data, petition) {
+            if (petition === vpet) {
+                var lasttoken = getLastToken(),
+                    i, tok;
+
+                for (i = 0; i < langftokensL; ++i) {
+                    tok = langftokens[i];
+                    if (tok.indexOf(lasttoken) === 0) {
+                        data += 'langfunc ' + tok + langftokens2[i] + '\n';
+                    }
+                }
+
+                window.setTimeout(function () {
+                    resolveHint(data, petition);
+                }, 0);
+            }
+        }
 
         this.insertHint = function ($hint) {
             if (!$hint) {
                 console.log('hint:', $hint);
                 throw new TypeError("Must provide valid hint and hints object as they are returned by calling getHints");
             } else {
-                /*
-                var cursor = cm.getCursor();
-                var txt = cm.getRange({
-                    line: 0,
-                    ch: 0
-                }, cursor);
-
-                var tl = txt.length - 1;
-                var ti = tl;
-
-                while ((ti > 0) && (endtokens.indexOf(txt.charAt(ti)) === -1)) {
-                    --ti;
-                }
-                */
-
                 var lasttoken = getLastToken();
-                cm.replaceSelection($hint.data('token').substring(lasttoken.length-1));
+                cm.replaceSelection($hint.data('token').substring(lasttoken.length));
             }
         };
 
@@ -147,12 +207,13 @@ define(function (require, exports, module) {
          */
         $(nodeConnection).on("GoHinter.update", function (evt, data, petition) {
             if (petition === vpet) {
-                $deferred.resolve({
-                    hints: formatter.format(data),
-                    match: "",
-                    selectInitial: true,
-                    handleWideResults: false
-                });
+                if (data === 'PANIC PANIC PANIC\n') {
+                    data = '';
+                }
+                window.setTimeout(function () {
+                    addLanguageHints(data, petition);
+                }, 0);
+
             }
         });
     }
