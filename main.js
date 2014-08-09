@@ -20,11 +20,27 @@ define(function (require, exports, module) {
         CodeHintManager = brackets.getModule("editor/CodeHintManager"), // CodeMirror Hints
         LanguageManager = brackets.getModule("language/LanguageManager"), // Language
         Editor = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"),// CodeMirror
+        PanelManager = brackets.getModule( 'view/PanelManager' ), // PanelManager
         ExtensionUtils  = brackets.getModule("utils/ExtensionUtils"); // ExtensionUtils (to load css)
 
     var GoHintProvider = require('GoHintProvider'); // load goHintProvider.
     var GoHintFormatter = require('GoHintFormatter'); // load goHintProvider.
-
+    
+    
+    var panelHTML = $(require('text!res/mainToolbar.html'));
+    var mainToolbar;
+    
+    
+    function doCompile (){
+        console.log("Compile !!");
+    }
+    
+    
+    // Configure Main Toolbar
+    console.log(panelHTML.children("#compile"));
+    panelHTML.children("#compile").on("click",doCompile);
+    
+    
     // Load CSS
     ExtensionUtils.loadStyleSheet(module, "style/main.css");
 
@@ -45,6 +61,11 @@ define(function (require, exports, module) {
         var goHintProvider = new GoHintProvider(new GoHintFormatter());
         // Set the hint provider for Go language.
         CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
+        
+    
+        // Also register a panel:
+        mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );
+        mainToolbar.show();
     });
     
 });
