@@ -55,7 +55,7 @@ maxerr: 50, node: true */
     
 
         try {
-            var gocode = spawn('/Users/david/go/bin/gocode', ['autocomplete', 'c' + cursor]);
+            var gocode = spawn('gocode', ['autocomplete', 'c' + cursor]);
 
             // Send current buffer file to stdin and close stdin.
             gocode.stdin.write(text);
