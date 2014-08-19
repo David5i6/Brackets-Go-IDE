@@ -77,7 +77,7 @@ define(function (require, exports, module) {
         }
 
         ltoken = txt.substring(ti + 1);
-        console.log(ltoken);
+        // console.log(ltoken);
 
         return ltoken;
     }
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
 
         this.insertHint = function ($hint) {
             if (!$hint) {
-                console.log('hint:', $hint);
+                // console.log('hint:', $hint);
                 throw new TypeError("Must provide valid hint and hints object as they are returned by calling getHints");
             } else {
                 var lasttoken = getLastToken();
