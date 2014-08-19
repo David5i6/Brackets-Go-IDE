@@ -29,8 +29,11 @@ maxerr: 50, node: true */
     "use strict";
 
 
-    var spawn = require('child_process').spawn;
+    var spawn         = require('child_process').spawn;
+    var ProcessUtils  = require('./ProcessUtils');
+    var extName       = '[go-ide] ';
     var _domainManager;
+    var gocodeResolvedPath;
 
 
     function formatHints(hints) {
@@ -42,6 +45,18 @@ maxerr: 50, node: true */
         };
     }
 
+    /**
+     * Uses ProcessUtils from Brackets-Git to check if an executable exists
+     */
+    function which(filePath, callback) {
+        ProcessUtils.executableExists(filePath, function (err, exists, resolvedPath) {
+            if (exists) {
+                callback(null, resolvedPath);
+            } else {
+                callback("ProcessUtils can't resolve the path requested: " + filePath);
+            }
+        });
+    }
 
     /**
      * @private
@@ -53,35 +68,52 @@ maxerr: 50, node: true */
      */
     function cmdGetHint(implicitChar, text, cursor, petition) {
     
-
-        try {
-            var gocode = spawn('/Users/david/go/bin/gocode', ['autocomplete', 'c' + cursor]);
-
-            // Send current buffer file to stdin and close stdin.
-            gocode.stdin.write(text);
-            gocode.stdin.end();
-
-            
-            // Temp data
-            var temp = "";
-            
-            // Capture output and concatenate to temp.
-            gocode.stdout.on('data', function (data) {
-                temp += data.toString();
+        // use 'which' to test if the gocode executable exists,
+        // otherwise spawn will throw a global ENOENT exception ignoring try-catch,
+        // which will cause Brackets Node domain to crash
+        if (!gocodeResolvedPath) {
+            which('gocode', function (err, resolvedPath) {
+                if (err) {
+                    console.error(extName + err);
+                    return;
+                }
+                gocodeResolvedPath = resolvedPath;
+                executeGoCode();
             });
+        } else {
+            executeGoCode();
+        }
 
-            gocode.stderr.on('data', function (data) {
-                console.log('stderr: ' + data);
-            });
+        function executeGoCode() {
+            try {
+                var gocode = spawn(gocodeResolvedPath, ['autocomplete', 'c' + cursor]);
 
-            gocode.on('close', function (code) {
-                // emit the result.
-                _domainManager.emitEvent("GoHinter", "update", [temp, petition]);
-            });
+                // Send current buffer file to stdin and close stdin.
+                gocode.stdin.write(text);
+                gocode.stdin.end();
 
-            gocode.unref();
-        } catch (e) {
-            console.log(e);
+
+                // Temp data
+                var temp = "";
+
+                // Capture output and concatenate to temp.
+                gocode.stdout.on('data', function (data) {
+                    temp += data.toString();
+                });
+
+                gocode.stderr.on('data', function (data) {
+                    console.error(extName + 'stderr: ' + data);
+                });
+
+                gocode.on('close', function (code) {
+                    // emit the result.
+                    _domainManager.emitEvent("GoHinter", "update", [temp, petition]);
+                });
+
+                gocode.unref();
+            } catch (e) {
+                console.error(extName + e);
+            }
         }
 
     }
