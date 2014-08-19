@@ -29,9 +29,11 @@ maxerr: 50, node: true */
     "use strict";
 
 
-    var spawn         = require('child_process').spawn;
-    var ProcessUtils  = require('./ProcessUtils');
-    var extName       = '[go-ide] ';
+    var spawn = require('child_process').spawn;
+    var exec = require('child_process').exec;
+    var fs = require('fs');
+    var ProcessUtils = require('./ProcessUtils');
+    var extName = '[go-ide] ';
     var _domainManager;
     var gocodeResolvedPath;
 
@@ -67,34 +69,15 @@ maxerr: 50, node: true */
      * @return {number} The amount of memory.
      */
     function cmdGetHint(implicitChar, text, cursor, petition) {
-    
-        // use 'which' to test if the gocode executable exists,
-        // otherwise spawn will throw a global ENOENT exception ignoring try-catch,
-        // which will cause Brackets Node domain to crash
-        if (!gocodeResolvedPath) {
-            which('gocode', function (err, resolvedPath) {
-                if (err) {
-                    console.error(extName + err);
-                    return;
-                }
-                gocodeResolvedPath = resolvedPath;
-                executeGoCode();
-            });
-        } else {
-            executeGoCode();
-        }
-
-        function executeGoCode() {
+        if (gocodeResolvedPath) {
             try {
                 var gocode = spawn(gocodeResolvedPath, ['autocomplete', 'c' + cursor]);
+                // Temp data
+                var temp = "";
 
                 // Send current buffer file to stdin and close stdin.
                 gocode.stdin.write(text);
                 gocode.stdin.end();
-
-
-                // Temp data
-                var temp = "";
 
                 // Capture output and concatenate to temp.
                 gocode.stdout.on('data', function (data) {
@@ -115,14 +98,67 @@ maxerr: 50, node: true */
                 console.error(extName + e);
             }
         }
-
     }
+
+
+    function detectGoCode() {
+        // use 'which' to test if the gocode executable exists,
+        // otherwise spawn will throw a global ENOENT exception ignoring try-catch,
+        // which will cause Brackets Node domain to crash
+        if (!gocodeResolvedPath) {
+            which('gocode', function (err, resolvedPath) {
+                if (err) {
+                    console.log("Try to detect if its a mac ...");
+                    macoswhicher();
+                } else {
+                    console.log("Path: " + resolvedPath);
+                    gocodeResolvedPath = resolvedPath;
+
+                }
+            });
+        }
+    }
+
+    function macoswhicher() {
+
+        which('sh', function (err, resolvedPath) {
+            console.log("BASH >> " + resolvedPath);
+            try {
+                //var cmd = resolvedPath+' -c \'which gocode\'';
+                var cmd = 'echo $HOME/go/bin/gocode';
+                console.log("command: <" + cmd + ">");
+                exec(cmd, function (error, out, err) {
+                    out=out||'';
+                    var outl=out.length-1;
+                    if (out.charAt(outl)==='\n'){
+                        out=out.substring(0,outl);
+                    }
+                    console.log("#"+out+"#");
+                    fs.exists(out, function (exists) {
+                        if (exists) {
+                            gocodeResolvedPath = out;
+                        } else {
+                            console.log("Go code is not present (was not found) :-(");
+                        }
+                    });
+                });
+
+            } catch (e) {
+                console.error(extName + e);
+            }
+        });
+    }
+
+
 
     /**
      * Initializes the domain.
      * @param {DomainManager} domainManager The DomainManager for the server
      */
     function init(domainManager) {
+
+        detectGoCode();
+
         if (!domainManager.hasDomain("GoHinter")) {
             domainManager.registerDomain("GoHinter", {
                 major: 0,
@@ -164,7 +200,7 @@ maxerr: 50, node: true */
             "update", [{
                 name: "data",
                 type: "string"
-            },{
+            }, {
                 name: "petition",
                 type: "number"
             }]
