@@ -52,10 +52,16 @@ define(function (require, exports, module) {
     }
 
 
-    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.', '\n', '\t'];
+    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>'];
 
     function validToken(implicitChar) {
-        return (implicitChar!=='')&&(endtokens.indexOf(implicitChar)===-1);
+        if (implicitChar) {
+            var code = implicitChar.charCodeAt(0);
+            console.log(" >> [", implicitChar, "] : ", endtokens.indexOf(implicitChar), " <--> ", implicitChar.length, " ----> ", code);
+            return (endtokens.indexOf(implicitChar) === -1)&&(code!==13)&&(code!==9);
+        } else {
+            return false
+        }
     }
 
 

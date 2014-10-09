@@ -37,8 +37,7 @@ define(function (require, exports, module) {
     
     
     // Configure Main Toolbar
-    console.log(panelHTML.children("#compile"));
-    panelHTML.children("#compile").on("click",doCompile);
+    panelHTML.children("#goide_maintb_btn_compile").on("click",doCompile);
     
     
     // Load CSS
@@ -64,8 +63,8 @@ define(function (require, exports, module) {
         
     
         // Also register a panel:
-        mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );
-        mainToolbar.show();
+        //mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );
+        //mainToolbar.show();
     });
     
 });

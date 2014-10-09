@@ -38,6 +38,17 @@
     text-shadow: 0 0 2pt #ffcaff;
 }
 
+.goHint_const{
+    box-shadow: inset 3pt 0 3pt 1pt #7b0000;
+    border-left: 1pt solid #4d0000;
+    border-radius: 0.5em;
+    padding-left:8pt;
+    padding-right:2pt;
+    margin:2pt;
+    text-shadow: 0 0 2pt #ff7f7f;
+    background-color: white;
+}
+
 .goHint_lang{
     box-shadow: inset 3pt 0 3pt 1pt #87ff7d;
     border-left: 1pt solid #20f205;
