@@ -1,81 +1,83 @@
 .goHint_package{
-    box-shadow: inset 3pt 0 3pt 1pt #ffba00;
-    border-left:1pt solid #cb9700;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #EAEACA;
+    border-color:s#ffba00;
+    background-color:#9a7a1f;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_func{
-    box-shadow: inset 3pt 0 3pt 1pt #7db9ff;
-    border-left: 1pt solid #0560f2;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #CACAFF;
+    border-color:#3a87e0;
+    background-color: #6685db;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_langfunc{
-    box-shadow: inset 3pt 0 3pt 1pt #917dff;
-    border-left: 1pt solid #3305f2;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #d8caff;
+    border-color:#573de6;
+    background-color:#917dff;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_var{
-    box-shadow: inset 3pt 0 3pt 1pt #ff7de6;
-    border-left: 1pt solid #f205e0;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #ffcaff;
+    border-color: #f205e0;
+    background-color: #d868cf;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_const{
-    box-shadow: inset 3pt 0 3pt 1pt #7b0000;
-    border-left: 1pt solid #4d0000;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #ff7f7f;
-    background-color: white;
+    border-color:#7b0000;
+    background-color:#481818;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_lang{
-    box-shadow: inset 3pt 0 3pt 1pt #87ff7d;
-    border-left: 1pt solid #20f205;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #ccffca;
+    border-color: #87ff7d;
+    background-color:#3ba32e;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
-
 .goHint_type{
-    box-shadow: inset 3pt 0 3pt 1pt #ff7171;
-    border-left: 1pt solid #fa0c0c;
-    border-radius: 0.5em;
-    padding-left:8pt;
-    padding-right:2pt;
-    margin:2pt;
-    text-shadow: 0 0 2pt #ffcaff;
+    border-color:#fa0c0c;
+    background-color:#be6262;
+    margin:1pt;
+    padding:1pt;
+    border-radius: 3pt;
+    text-shadow: 0 0 4pt #000;
+    color: #fff;
 }
 
 .goHint_fp{
-    color:#1b3a9b;
-    text-shadow: 0 0 2pt #CADAEA;
+    font-weight: lighter;
+    font-style: oblique;
 }
 
 .goHint_fr{
-    color:#327232;
-    text-shadow: 0 0 2pt #CAEACA;
+    font-weight: normal;
+    font-style: oblique;
+}
+
+.goHint_m{
+    font-weight: bold;
 }

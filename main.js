@@ -55,12 +55,20 @@ define(function (require, exports, module) {
         lineComment: ["//", "//"]
     });
 
+    function startup(){
+        try{
+            var goHintProvider = new GoHintProvider(new GoHintFormatter());
+            // Set the hint provider for Go language.
+            CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
+        }catch(e){
+            setTimeout(startup,100);
+        }
+    }
+    
     // Where the app starts
     AppInit.appReady(function () {
-        var goHintProvider = new GoHintProvider(new GoHintFormatter());
-        // Set the hint provider for Go language.
-        CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
         
+            startup();
     
         // Also register a panel:
         //mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );

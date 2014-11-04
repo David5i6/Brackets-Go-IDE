@@ -15,6 +15,7 @@ define(function (require, exports, module) {
             var t2, l2, t3, l3, l4,lv;
 
             var tipo = linea.substring(0, t);
+            
 
             lin = "<span class='goHint_" + tipo + "'>" + tipo + "</span> ";
 
@@ -28,7 +29,7 @@ define(function (require, exports, module) {
             // Is a procedure ?
             if (t2 !== -1) {
                 lv = l2.substring(0, t2);
-                lin += lv + ' ';
+                lin += '<span class="goHint_m">'+lv + ' </span>';
                 /*
                 lin += l2.substring(t2);
                 */
