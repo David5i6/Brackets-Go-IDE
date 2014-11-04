@@ -52,7 +52,7 @@ define(function (require, exports, module) {
     }
 
 
-    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>'];
+    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>','.'];
 
     function validToken(implicitChar) {
         if (implicitChar) {
@@ -116,9 +116,6 @@ define(function (require, exports, module) {
         '() interface{}'
     ]
     var langftokensL = langftokens.length;
-
-
-
 
 
     function GoHintProvider(formatter) {
@@ -204,7 +201,6 @@ define(function (require, exports, module) {
                 cm.replaceSelection($hint.data('token').substring(lasttoken.length));
             }
         };
-
 
 
         /**

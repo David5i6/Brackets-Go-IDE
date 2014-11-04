@@ -64,10 +64,6 @@ define(function (require, exports, module) {
          * Parses a line, from a begining position.
          */
         this.parseLine = function (arr, data, bpos) {
-            arr = arr || []; // An Array
-            bpos = bpos | 0; // Is an integer
-            data = data || ''; // Is an String
-
             var nl = data.indexOf('\n', bpos + 1);
             var line;
             if (nl !== -1) {
