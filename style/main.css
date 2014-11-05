@@ -1,71 +1,104 @@
 .goHint_package{
+    border-right: 2pt solid #ffba00;
+    box-shadow: inset -2pt 0 #c7aa56;
+    padding-right: 0.25em;
+    /*
     border-color:s#ffba00;
-    background-color:#9a7a1f;
+    background-color:#c7aa56;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;
+    */
 }
 
 .goHint_func{
+    border-right: 2pt solid #3a87e0;
+    box-shadow: inset -2pt 0 #6b91d9;
+    padding-right: 0.25em;
+    /*
     border-color:#3a87e0;
-    background-color: #6685db;
+    background-color: #6b91d9;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;
+    */
 }
 
 .goHint_langfunc{
+    border-right: 2pt solid #573de6;
+    box-shadow: inset -2pt 0 #987fde;
+    padding-right: 0.25em;
+    /*
     border-color:#573de6;
-    background-color:#917dff;
+    background-color:#987fde;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;
+    */
 }
 
 .goHint_var{
+    border-right: 2pt solid #f205e0;
+    box-shadow: inset -2pt 0 #cc72c6;
+    padding-right: 0.25em;
+    /*
     border-color: #f205e0;
-    background-color: #d868cf;
+    background-color: #cc72c6;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;
+    */
 }
 
 .goHint_const{
+    border-right: 2pt solid #7b0000;
+    box-shadow: inset -2pt 0 #b97777;
+    padding-right: 0.25em;
+    /*
     border-color:#7b0000;
-    background-color:#481818;
+    background-color:#b97777;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;*/
 }
 
 .goHint_lang{
+    /*
     border-color: #87ff7d;
-    background-color:#3ba32e;
+    background-color:#6ec763;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;*/
+    border-right: 2pt solid #87ff7d;
+    box-shadow: inset -2pt 0 #6ec763;
+    padding-right: 0.25em;
 }
 
 .goHint_type{
+    border-right: 2pt solid #fa0c0c;
+    box-shadow: inset -2pt 0 #ce7a61;
+    padding-right: 0.25em;
+    /*
     border-color:#fa0c0c;
-    background-color:#be6262;
+    background-color:#ce7a61;
     margin:1pt;
     padding:1pt;
     border-radius: 3pt;
-    text-shadow: 0 0 4pt #000;
-    color: #fff;
+    text-shadow: 0 0 1pt #fff;
+    color: #000;
+    */
 }
 
 .goHint_fp{

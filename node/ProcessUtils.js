@@ -10,6 +10,7 @@ var isWin = /^win/.test(process.platform);
 var noop = function () {};
 
 function fixEOL(str) {
+    "use strict";
     if (str[str.length - 1] === "\n") {
         str = str.slice(0, -1);
     }
@@ -17,6 +18,7 @@ function fixEOL(str) {
 }
 
 function findChildren(arr, pid) {
+    "use strict";
     var result = [];
     arr.forEach(function (obj) {
         if (obj.parentprocessid == pid) {
@@ -29,6 +31,7 @@ function findChildren(arr, pid) {
 }
 
 function killSingleProcess(pid, callback) {
+    "use strict";
     callback = callback || noop;
     pid = pid.toString();
 
@@ -46,6 +49,7 @@ function killSingleProcess(pid, callback) {
 }
 
 function getChildrenOfPid(pid, callback) {
+    "use strict";
     callback = callback || noop;
     pid = pid.toString();
 
@@ -87,9 +91,10 @@ function getChildrenOfPid(pid, callback) {
 }
 
 function executableExists(filename, dir, callback) {
+    "use strict";
     if (typeof dir === "function") {
         callback = dir;
-        dir = "";
+        dir = '';
     }
 
     which(filename, function (err, path) {

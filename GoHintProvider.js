@@ -60,7 +60,7 @@ define(function (require, exports, module) {
             console.log(" >> [", implicitChar, "] : ", endtokens.indexOf(implicitChar), " <--> ", implicitChar.length, " ----> ", code);
             return (endtokens.indexOf(implicitChar) === -1)&&(code!==13)&&(code!==9);
         } else {
-            return false
+            return false;
         }
     }
 
@@ -89,7 +89,7 @@ define(function (require, exports, module) {
     }
 
 
-    var langtokens = ['bool', 'byte', 'const', 'complex128', 'complex64', 'error', 'flot32', 'float64',
+    var langtokens = ['bool', 'byte', 'const', 'complex128', 'complex64', 'error', 'float32', 'float64',
                       'for', 'func', 'go', 'if', 'int', 'int16', 'int32', 'int64', 'int8', 'interface', 'import',
                       'il', 'package', 'return', 'rune', 'string', 'struct', 'type',
                       'uint', 'uint16', 'uint32', 'uint64', 'uint8', 'uintptr', 'var'];
@@ -119,8 +119,6 @@ define(function (require, exports, module) {
 
 
     function GoHintProvider(formatter) {
-
-
         //$ = jquery;
 
         this.hasHints = function (editor, implicitChar) {
@@ -149,7 +147,7 @@ define(function (require, exports, module) {
             if (petition === vpet) {
                 $deferred.resolve({
                     hints: formatter.format(data),
-                    match: "",
+                    match: '',
                     selectInitial: true,
                     handleWideResults: false
                 });
