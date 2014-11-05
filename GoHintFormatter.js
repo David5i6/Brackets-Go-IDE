@@ -42,10 +42,10 @@ define(function (require, exports, module) {
 
                 if (t3 !== -1) {
                     l4 = l3.substring(0, t3);
-                    lin += '<span class="goHint_fp">' + l4 + '</span>';
-                    lin += ' <span class="goHint_fr">';
-                    lin += l3.substring(t3);
-                    lin += '</span>';
+                    lin += '<span class="goHint_fp">' + l4 + '</span>'
+                        + ' <span class="goHint_fr">'
+                        +  l3.substring(t3)
+                        +  '</span>'
                     lin = $(lin).data("token",lv);
                 } else {
                     lin += '<span class="goHint_fp">' + l3 + '</span>';

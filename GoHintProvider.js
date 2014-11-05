@@ -16,8 +16,6 @@ define(function (require, exports, module) {
     'use strict';
 
 
-
-
     // Para poder lanzar comandos externos.
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         NodeDomain = brackets.getModule("utils/NodeDomain"),
@@ -52,12 +50,12 @@ define(function (require, exports, module) {
     }
 
 
-    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>','.'];
+    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>','.','{','}'];
 
     function validToken(implicitChar) {
         if (implicitChar) {
             var code = implicitChar.charCodeAt(0);
-            console.log(" >> [", implicitChar, "] : ", endtokens.indexOf(implicitChar), " <--> ", implicitChar.length, " ----> ", code);
+            //console.log(" >> [", implicitChar, "] : ", endtokens.indexOf(implicitChar), " <--> ", implicitChar.length, " ----> ", code);
             return (endtokens.indexOf(implicitChar) === -1)&&(code!==13)&&(code!==9);
         } else {
             return false;
@@ -93,8 +91,8 @@ define(function (require, exports, module) {
                       'for', 'func', 'go', 'if', 'int', 'int16', 'int32', 'int64', 'int8', 'interface', 'import',
                       'il', 'package', 'return', 'rune', 'string', 'struct', 'type',
                       'uint', 'uint16', 'uint32', 'uint64', 'uint8', 'uintptr', 'var'];
+    
     var langtokensL = langtokens.length;
-
 
     var langftokens = ['append', 'cap', 'close', 'complex', 'copy', 'delete', 'imag', 'len', 'make', 'new',
                        'panic', 'print', 'prntln', 'real', 'recover'];

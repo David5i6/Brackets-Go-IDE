@@ -2,7 +2,7 @@
     "title": "Go-IDE",
     "name": "go-ide",
     "description": "Go language IDE transformation for brackets (needs gocode)",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "author": "David Sánchez i Gregori",
     "license": "MIT",
     "homepage": "https://github.com/David5i6/Brackets-Go-IDE.git",
