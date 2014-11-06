@@ -15,7 +15,6 @@
 define(function (require, exports, module) {
     'use strict';
 
-
     // Para poder lanzar comandos externos.
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         NodeDomain = brackets.getModule("utils/NodeDomain"),

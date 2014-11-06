@@ -19,27 +19,33 @@ define(function (require, exports, module) {
     var AppInit = brackets.getModule("utils/AppInit"), // Brackets init
         CodeHintManager = brackets.getModule("editor/CodeHintManager"), // CodeMirror Hints
         LanguageManager = brackets.getModule("language/LanguageManager"), // Language
-        Editor = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"),// CodeMirror
-        PanelManager = brackets.getModule( 'view/PanelManager' ), // PanelManager
-        ExtensionUtils  = brackets.getModule("utils/ExtensionUtils"); // ExtensionUtils (to load css)
+        Editor = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"), // CodeMirror
+        PanelManager = brackets.getModule('view/PanelManager'), // PanelManager
+        ExtensionUtils = brackets.getModule("utils/ExtensionUtils"); // ExtensionUtils (to load css)
+
+    var Menus = brackets.getModule("command/Menus"), // Menus
+        CommandManager = brackets.getModule("command/CommandManager"), // COmmand Manager
+        EditorManager = brackets.getModule("editor/EditorManager"); // EditorManager
 
     var GoHintProvider = require('GoHintProvider'); // load goHintProvider.
     var GoHintFormatter = require('GoHintFormatter'); // load goHintProvider.
-    
-    
+
+
+
+
     var panelHTML = $(require('text!res/mainToolbar.html'));
     var mainToolbar;
-    
-    
-    function doCompile (){
+
+
+    function doCompile() {
         console.log("Compile !!");
     }
-    
-    
+
+
     // Configure Main Toolbar
-    panelHTML.children("#goide_maintb_btn_compile").on("click",doCompile);
-    
-    
+    panelHTML.children("#goide_maintb_btn_compile").on("click", doCompile);
+
+
     // Load CSS
     ExtensionUtils.loadStyleSheet(module, "style/main.css");
 
@@ -54,25 +60,58 @@ define(function (require, exports, module) {
         blockComment: ["/*", "*/"],
         lineComment: ["//", "//"]
     });
+    
+    
+    
+    // Menu commands
+            var menu_goFmtCmd='menu_goFmt';
+            /*
+             * Implementation
+             */
+            function menu_goFmt() {
+                var doc = EditorManager.getCurrentFullEditor().document;
+                doc.replaceRange("// copyright text \n", {
+                    line: 0,
+                    ch: 0
+                });
+            }
+    
 
-    function startup(){
-        try{
+    function startup() {
+        try {
             var goHintProvider = new GoHintProvider(new GoHintFormatter());
+
             // Set the hint provider for Go language.
             CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
-        }catch(e){
-            setTimeout(startup,100);
+
+
+            // Also register a panel:
+            //mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );
+            //mainToolbar.show();
+
+
+            // ===== ==== ==== ==== 
+
+            
+            /*
+             * Command
+             */
+            CommandManager.register("Go Format", menu_goFmtCmd, menu_goFmt);
+            /*
+             * Custom menu
+             */
+            var menu = Menus.addMenu("Go", "david5i6.bracketsgoide.gomenu");
+            menu.addMenuItem(menu_goFmtCmd);
+        } catch (e) {
+            setTimeout(startup, 100);
         }
     }
-    
+
     // Where the app starts
     AppInit.appReady(function () {
-        
-            startup();
-    
-        // Also register a panel:
-        //mainToolbar=PanelManager.createBottomPanel( 'david5i6.bracketsgoide.mainToolbar.panel', panelHTML, 32 );
-        //mainToolbar.show();
+
+        startup();
+
     });
-    
+
 });
