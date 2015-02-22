@@ -41,21 +41,23 @@ define(function (require, exports, module) {
         // A new promise
         $deferred = new $.Deferred();
         // Call getHint on a Domain and increment the version of petition.
+        console.log('Call GoHinterDomain');
         GoHinterDomain.exec("getHint", implicitChar, text, cursor, ++vpet)
             .fail(function (err) {
                 console.error("[GoHintDomain] failed to get hints: ", err);
             });
+        console.log('Called GoHinterDomain');
         return $deferred;
     }
 
 
-    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>','.','{','}'];
+    var endtokens = [' ', '+', '-', '/', '*', '(', ')', '[', ']', ':', ',', '<', '>', '.', '{', '}'];
 
     function validToken(implicitChar) {
         if (implicitChar) {
             var code = implicitChar.charCodeAt(0);
             //console.log(" >> [", implicitChar, "] : ", endtokens.indexOf(implicitChar), " <--> ", implicitChar.length, " ----> ", code);
-            return (endtokens.indexOf(implicitChar) === -1)&&(code!==13)&&(code!==9);
+            return (endtokens.indexOf(implicitChar) === -1) && (code !== 13) && (code !== 9);
         } else {
             return false;
         }
@@ -90,7 +92,7 @@ define(function (require, exports, module) {
                       'for', 'func', 'go', 'if', 'int', 'int16', 'int32', 'int64', 'int8', 'interface', 'import',
                       'il', 'package', 'return', 'rune', 'string', 'struct', 'type',
                       'uint', 'uint16', 'uint32', 'uint64', 'uint8', 'uintptr', 'var'];
-    
+
     var langtokensL = langtokens.length;
 
     var langftokens = ['append', 'cap', 'close', 'complex', 'copy', 'delete', 'imag', 'len', 'make', 'new',
@@ -124,6 +126,7 @@ define(function (require, exports, module) {
         };
 
         this.getHints = function (implicitChar) {
+            console.log('Asking Hints.');
             // If is a valid token for a hint ...
             if (validToken(implicitChar)) {
                 var cursor = cm.getCursor();
@@ -162,7 +165,7 @@ define(function (require, exports, module) {
                         data += 'lang ' + tok + '\n';
                     }
                 }
-
+                console.log('#### HINT TRACE 01');
                 window.setTimeout(function () {
                     addLanguageFunctionHints(data, petition);
                 }, 0);
@@ -180,7 +183,7 @@ define(function (require, exports, module) {
                         data += 'langfunc ' + tok + langftokens2[i] + '\n';
                     }
                 }
-
+                console.log('#### HINT TRACE 02');
                 window.setTimeout(function () {
                     resolveHint(data, petition);
                 }, 0);
@@ -202,11 +205,12 @@ define(function (require, exports, module) {
          * When domain send the update event (and only if there're no multiple version events...
          * Format the response and resolve the promise.
          */
-        $(nodeConnection).on("GoHinter.update", function (evt, data, petition) {
+        $(nodeConnection).on("GoHinter:update", function (evt, data, petition) {
             if (petition === vpet) {
                 if (data === 'PANIC PANIC PANIC\n') {
                     data = '';
                 }
+                console.log('#### HINT TRACE 00');
                 window.setTimeout(function () {
                     addLanguageHints(data, petition);
                 }, 0);

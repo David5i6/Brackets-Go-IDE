@@ -81,8 +81,11 @@ define(function (require, exports, module) {
         try {
             var goHintProvider = new GoHintProvider(new GoHintFormatter());
 
+            
+            console.info('Registering Hint Provider.');
             // Set the hint provider for Go language.
             CodeHintManager.registerHintProvider(goHintProvider, ["go"], 1);
+            console.info('Registered go Hint Provider');
 
 
             // Also register a panel:
@@ -103,6 +106,7 @@ define(function (require, exports, module) {
             var menu = Menus.addMenu("Go", "david5i6.bracketsgoide.gomenu");
             menu.addMenuItem(menu_goFmtCmd);
         } catch (e) {
+            console.log('Error starting up go hint provider',e);
             setTimeout(startup, 100);
         }
     }

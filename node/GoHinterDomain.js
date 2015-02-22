@@ -41,7 +41,7 @@ maxerr: 50, node: true */
     function formatHints(hints) {
         return {
             hints: hints,
-            match: "",
+            match: '',
             selectInitial: true,
             handleWideResults: true
         };
@@ -69,6 +69,7 @@ maxerr: 50, node: true */
      * @return {number} The amount of memory.
      */
     function cmdGetHint(implicitChar, text, cursor, petition) {
+        console.log('cmdGetHint --> ',gocodeResolvedPath);
         if (gocodeResolvedPath) {
             try {
                 var gocode = spawn(gocodeResolvedPath, ['autocomplete', 'c' + cursor]);
@@ -89,6 +90,7 @@ maxerr: 50, node: true */
                 });
 
                 gocode.on('close', function (code) {
+                    console.log('gocode -> ',temp);
                     // emit the result.
                     _domainManager.emitEvent("GoHinter", "update", [temp, petition]);
                 });
@@ -124,16 +126,15 @@ maxerr: 50, node: true */
         which('sh', function (err, resolvedPath) {
             console.log("BASH >> " + resolvedPath);
             try {
-                //var cmd = resolvedPath+' -c \'which gocode\'';
                 var cmd = 'echo $HOME/go/bin/gocode';
                 console.log("command: <" + cmd + ">");
                 exec(cmd, function (error, out, err) {
-                    out=out||'';
-                    var outl=out.length-1;
-                    if (out.charAt(outl)==='\n'){
-                        out=out.substring(0,outl);
+                    out = out || '';
+                    var outl = out.length - 1;
+                    if (out.charAt(outl) === '\n') {
+                        out = out.substring(0, outl);
                     }
-                    console.log("#"+out+"#");
+                    console.log("#" + out + "#");
                     fs.exists(out, function (exists) {
                         if (exists) {
                             gocodeResolvedPath = out;
@@ -157,6 +158,7 @@ maxerr: 50, node: true */
      */
     function init(domainManager) {
 
+        console.log('Go code - Node Init');
         detectGoCode();
 
         if (!domainManager.hasDomain("GoHinter")) {
