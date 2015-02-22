@@ -99,12 +99,12 @@ define(function (require, exports, module) {
             /*
              * Command
              */
-            CommandManager.register("Go Format", menu_goFmtCmd, menu_goFmt);
+            //CommandManager.register("Go Format", menu_goFmtCmd, menu_goFmt);
             /*
              * Custom menu
              */
-            var menu = Menus.addMenu("Go", "david5i6.bracketsgoide.gomenu");
-            menu.addMenuItem(menu_goFmtCmd);
+            //var menu = Menus.addMenu("Go", "david5i6.bracketsgoide.gomenu");
+            //menu.addMenuItem(menu_goFmtCmd);
         } catch (e) {
             console.log('Error starting up go hint provider',e);
             setTimeout(startup, 100);
